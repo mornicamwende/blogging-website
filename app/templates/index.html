@@ -1,0 +1,229 @@
+{% import 'macros.html' as macro%}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>People's blog</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{{url_for('static', filename='css/all.min.css')}}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+    type='text/css'>
+  <link
+    href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+  <!-- Custom styles for this template -->
+  <link href="{{url_for('static', filename='css/clean-blog.min.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+ 
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="{{ url_for('main.index')}}">Start Blogging</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+        aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.index')}}">Home</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.about')}}">About</a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.add')}}">Add Post</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.contact')}}">Contact</a>
+          </li> -->
+        </ul>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_authenticated %}
+        <!-- <li style="color:white;padding:15px;">{{current_user.username}}</li> -->
+
+        <li class="dropdown"><a href="#" class="dropdown-toggle text-light" data-toggle="dropdown"><i
+              class="fa fa-user"></i><strong class="ml-2">Welcome, {{current_user.username}}</strong> <b
+              class="caret"></b></a>
+          <ul class="dropdown-menu bg-dark text-center">
+
+            <li><a href="{{url_for('main.profile',uname=current_user.username)}} " class="text-light "><i
+                  class="icon-envelope"></i><strong>Your profile</strong></a></li>
+            <li class="divider"></li>
+            <div class="dropdown-divider"></div>
+            <li><a href="{{url_for('auth.logout')}}" class="text-light "><i
+                  class="fa fa-sign-out mr-2"></i><strong>Logout</strong></a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="{{url_for('auth.login')}}" class="text-light"><i class="fa fa-sign-in mr-2"></i><strong>Sign
+              In</strong></a></li>
+        {%endif%}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url('static/img/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Blogging Blogs</h1>
+            <span class="subheading"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-header bg-secondary">
+            <h2>Quote of the day...</h2>
+          </div>
+          <div class="card-body-bg-info">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">{{quotes.quote}}</p>
+              <footer class="blockquote-footer"><cite>{{quotes.author}}</cite></footer>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg- col-md-6 mx- tex-center">
+        {% for post in posts %}
+        <div class="post-preview text-center">
+          <a href="{{ url_for('main.post', post_id=post.id)}}">
+            <h2 class="post-title">
+              {{post.title}}
+            </h2>
+            <h3 class="post-subtitle">
+              {{post.subtitle}}
+            </h3>
+          </a>
+          <p class="post-meta">Posted by {{post.user.username}} on {{post.date.strftime('%B %d, %Y')}}</p>
+        </div>
+        <hr>
+        {% endfor %}
+         <hr>
+
+      </div>
+      <div class="col-md-3">
+        <div class="w-50">
+          {% for message in get_flashed_messages() %}
+          <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ message }}
+          </div>
+          {% endfor %}
+         
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr>  
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-- Custom scripts for this template -->
+  <script src="{{url_for('static', filename='js/clean-blog.min.js')}}"></script>
+
+
+</body>
+
+</html>{% import 'macros.html' as macro%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Blogging Blogs</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+  <link href="{{url_for('static', filename='css/bootstrap.min.css')}}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{{url_for('static', filename='css/all.min.css')}}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
+    type='text/css'>
+  <link
+    href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+    rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+  <!-- Custom styles for this template -->
+  <link href="{{url_for('static', filename='css/clean-blog.min.css')}}" rel="stylesheet">
+
+</head>
+
+<body>
+
+        {% if current_user.is_authenticated %}
+        <li style="color:white;padding:15px;">{{current_user.username}}</li>
+
+        <li class="dropdown"><a href="#" class="dropdown-toggle text-light" data-toggle="dropdown"><i
+              class="fa fa-user"></i><strong class="ml-2">{{current_user.username}}</strong> <b
+              class="caret"></b></a>
+          <ul class="dropdown-menu bg-dark text-center">
+
+            <li><a href="{{url_for('main.profile',uname=current_user.username)}} " class="text-light "><i
+                  class="icon-envelope"></i><strong>Your profile</strong></a></li>
+            <li class="divider"></li>
+            <div class="dropdown-divider"></div>
+            <li><a href="{{url_for('auth.logout')}}" class="text-light "><i
+                  class="fa fa-sign-out mr-2"></i><strong>Logout</strong></a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="{{url_for('auth.login')}}" class="text-light"><i class="fa fa-sign-in mr-2"></i><strong>Sign
+              In</strong></a></li>
+        {%endif%}
+      </ul>
+    </div>
+  </nav>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+  <script src="{{url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Custom scripts for this template -->
+  <script src="{{url_for('static', filename='js/clean-blog.min.js')}}"></script>
+</body>
+</html>
