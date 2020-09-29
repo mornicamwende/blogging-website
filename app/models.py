@@ -103,10 +103,17 @@ class Comment(db.Model):
         comments = Comment.query.filter_by(blog_id=id).all()
         return comments
 
+    def delete_post(self):
+        db.session.delete(self)
+        db.session.commit()
+
 
     @classmethod
     def clear_comments(cls):
         Comment.all_comments.clear()
+
+    def __repr__(self):
+        return f'Comment {self.comments}'
 
 
 class Subscribe(db.Model):

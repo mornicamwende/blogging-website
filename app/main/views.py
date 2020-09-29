@@ -20,7 +20,7 @@ def index():
     quotes = get_quotes()
 
     title = 'Home - Welcome to the bloging site'
-    return render_template('index.html', title = title, quotes = quotes, posts=posts)
+    return render_template('index.html', title = title, quotes=quotes, posts=posts)
 
 @main.route('/about')
 def about():
