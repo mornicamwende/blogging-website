@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Welcome to the blogging site</title>
+  <title>Welcome to the Maritime blogging site</title>
 
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -29,7 +29,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
-          <a class="navbar-brand" href="{{ url_for('main.index')}}"> Blogging Blogs</a>
+          <a class="navbar-brand" href="{{ url_for('main.index')}}"> Maritime Blogs</a>
           <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fas fa-bars"></i>
@@ -39,15 +39,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.index')}}">Home</a>
               </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('main.about')}}">About</a>
-              </li> -->
+             
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.add')}}">Add Post</a>
               </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('main.contact')}}">Contact</a>
-              </li> -->
+             
             </ul>
           </div>
           <ul class="nav navbar-nav navbar-right">
@@ -60,7 +56,7 @@
                       <li><a href="{{url_for('main.profile',uname=current_user.username)}} " class="text-light " ><i class="icon-envelope"></i><strong>Your profile</strong></a></li>
                       <li class="divider"></li>
                       <div class="dropdown-divider"></div>
-                      <li><a href="{{url_for('auth.logout')}}" class="text-light "><i class="fa fa-sign-out mr-2"></i><strong>Logout</strong></a></li>
+                      <li><a href="{{url_for('auth.logout')}}" class="text-dark "><i class="fa fa-sign-out mr-2"></i><strong>Logout</strong></a></li>
                   </ul>
               </li>
                 {% else %}
