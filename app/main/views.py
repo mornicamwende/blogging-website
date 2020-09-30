@@ -153,7 +153,7 @@ def delete_post(post_id):
 
 
 
-#sSubscribe
+#Subscribe
 @main.route('/subscribe', methods=['GET', 'POST'])
 def subscribe():
     '''

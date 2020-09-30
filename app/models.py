@@ -113,7 +113,7 @@ class Comment(db.Model):
         Comment.all_comments.clear()
 
     def __repr__(self):
-        return f'Comment {self.comments}'
+        return f'Commnt {self.comments}'
 
 
 class Subscribe(db.Model):
